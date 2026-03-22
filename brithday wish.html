@@ -1,0 +1,267 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday! ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { --accent: #ff3366; --gold: #feca57; --dark-bg: #121212; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at center, #1a1a2e 0%, #0f0c29 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 20px;
+            cursor: crosshair;
+        }
+
+        .star {
+            position: fixed;
+            color: var(--gold);
+            pointer-events: none;
+            font-size: 15px;
+            animation: starFall 1s forwards;
+            z-index: 999;
+        }
+        @keyframes starFall {
+            to { transform: translateY(50px) scale(0); opacity: 0; }
+        }
+
+        .slider-card {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 40px;
+            padding: 40px 25px;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .shake { animation: shake 0.3s ease-in-out; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .slide { display: none; animation: fadeIn 0.6s ease; text-align: center; }
+        .slide.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+        h1 { font-family: 'Playfair Display', serif; color: var(--gold); margin-bottom: 15px; font-size: 2.2rem; }
+        
+        #musicToggle {
+            position: fixed; top: 20px; right: 20px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--gold);
+            color: white; padding: 10px; border-radius: 50%;
+            cursor: pointer; z-index: 100; font-size: 1.2rem;
+        }
+
+        .msg-box { 
+            font-size: 0.95rem; line-height: 1.7; color: #ffffff;
+            text-align: justify; background: rgba(0,0,0,0.4); 
+            padding: 20px; border-radius: 20px; margin-bottom: 20px;
+            min-height: 100px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .photo-stack-container {
+            position: relative; height: 280px; width: 220px; margin: 20px auto; cursor: pointer;
+        }
+        .polaroid-card {
+            position: absolute; width: 100%; height: 100%; background: white;
+            padding: 10px 10px 40px 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1); border-radius: 2px;
+            pointer-events: none;
+        }
+        .polaroid-card img { width: 100%; height: 210px; object-fit: cover; }
+
+        #giftContent p { color: #ffffff !important; font-size: 1.15rem; line-height: 1.6; }
+
+        .btn-group { display: flex; gap: 15px; justify-content: center; align-items: center; margin-top: 25px; min-height: 60px; }
+        .btn { background: linear-gradient(45deg, var(--accent), #ff6b6b); color: white; border: none; padding: 12px 30px; border-radius: 50px; cursor: pointer; font-weight: 600; }
+        #noBtn { background: transparent; border: 1px solid white; transition: 0.2s ease; position: relative; }
+
+        .balloon {
+            position: fixed; bottom: -50px; font-size: 2rem; z-index: 100;
+            animation: floatUp 4s forwards linear;
+        }
+        @keyframes floatUp { to { transform: translateY(-110vh) translateX(20px); opacity: 0; } }
+        .fav-img { width: 160px; height: 160px; border-radius: 50%; border: 3px solid var(--gold); object-fit: cover; margin-bottom: 15px; }
+        
+        .tap-instruction { color: var(--gold); font-size: 0.9rem; margin-top: 10px; font-style: italic; opacity: 0.8; }
+    </style>
+</head>
+<body>
+
+    <button id="musicToggle" onclick="toggleMusic()">🎵</button>
+    <audio id="bgMusic" loop>
+        <source src="YOUR_MUSIC_LINK_HERE.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="slider-card" id="mainCard">
+        <div class="slide active" id="s1">
+            <h1>Hey Nill</h1>
+            <p style="color: #ffffff; opacity: 0.8;">A little surprise for Youuu...</p>
+            <button class="btn" onclick="go(2)">Open it ✨</button>
+        </div>
+
+        <div class="slide" id="s2">
+            <h1>Happy Birthday! 🎂</h1>
+            <div class="msg-box" id="typingMsg"></div>
+            <button class="btn" onclick="go(3)">See Memories 📸</button>
+        </div>
+
+        <div class="slide" id="s3">
+            <h1>Memories</h1>
+            <div class="photo-stack-container" id="stack" onclick="swapCard()">
+                <div class="polaroid-card" style="z-index: 3; transform: rotate(-3deg);">
+    <img src="https://i.ibb.co/WYpq4dP/IMG-20260320-WA0005.jpg">
+</div>
+
+                <div class="polaroid-card" style="z-index: 2; transform: rotate(4deg);">
+    <img src="https://i.ibb.co/h1t6X4DK/IMG-20260320-WA0002.jpg">
+ </div>
+                <div class="polaroid-card" style="z-index: 1; transform: rotate(-1deg);">
+     <img src="https://i.ibb.co/GfxBD6d5/IMG-20260320-WA0004.jpg">
+  </div>
+  
+  <div class="polaroid-card" style="z-index: 1; transform: rotate(-1deg);">
+     <img src="https://i.ibb.co/Fbyn6LNw/IMG-20260322-WA0003.jpg">
+  </div>
+  
+<div class="polaroid-card" style="z-index: 1; transform: rotate(-1deg);">
+     <img src="https://i.ibb.co/QWLT80t/IMG-20260320-WA0003.jpg">
+  </div>
+  
+            </div>
+            <p style="color:var(--gold); font-size: 0.7rem;">(Tap photos to swap)</p>
+            <button class="btn" style="margin-top: 15px;" onclick="go(4)">Click Here ❤️ </button>
+        </div>
+
+        <div class="slide" id="s4">
+            <img src="https://i.ibb.co/Zz2kntkT/IMG-20260320-WA0001.jpg" class="fav-img">
+            <h1>My Favorite 🤍</h1>
+            <button class="btn" onclick="go(5)">Show My Gift!</button>
+        </div>
+
+        <div class="slide" id="s5">
+            <div id="giftWrapper">
+                <div class="gift-box" id="gb" style="font-size: 6rem; cursor:pointer;" onclick="triggerBlast()">🎁</div>
+                <p class="tap-instruction" id="tapHint">Tap on the gift to open it! ✨</p>
+            </div>
+            <div id="giftContent" style="display:none;">
+                <p style="font-style: italic; font-family:'Playfair Display'; margin-bottom: 20px;">
+                    "मागच्या जन्मातलं पुण्य माझं कदाचित देवाला आठवलं ...!
+म्हणून रक्ताच्या सुंदर नात्यापेक्षा देवाने आपलं नातं  बनवलं...!!
+नाहीतर तुमच्याविना या दुनियेत मी येऊन तरी काय केलं असतं...
+म्हणूनच देवाने तुम्हाला 'भाऊ' बनवून माझ्या आयुष्यात पाठवलं ...!!!"
+                </p>
+                <div class="btn-group">
+                    <button class="btn" onclick="go(6)">Hoo!</button>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="slide" id="s6">
+            <h1 style="color:#ffffff;">Thanks ! 💖</h1>
+            <p style="color:#ffffff;">मी बनवलेली website तुला आवडली असेल 🙇🏻‍♂️🫶🏻</p>
+            <button class="btn" style="margin-top: 20px;" onclick="location.reload()">Ho</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('mousemove', (e) => {
+            let star = document.createElement('div');
+            star.className = 'star';
+            star.innerHTML = '✨';
+            star.style.left = e.clientX + 'px';
+            star.style.top = e.clientY + 'px';
+            document.body.appendChild(star);
+            setTimeout(() => star.remove(), 1000);
+        });
+
+        function go(n) {
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            document.getElementById('s' + n).classList.add('active');
+            if(n === 2) {
+                document.getElementById("typingMsg").innerHTML = "";
+                index = 0;
+                startTyping();
+            }
+        }
+
+        const fullText = "Wish You Many Many Happy Returns Of The Day My Heart Beat ❤️💕🎂🍫💝🍬 Stay Always Be Happy And Healthy 😊🥰 Enjoy Your Special Day Bro Jaan ❤️💞 Live Long Life ❤️💕 Your All Dream Come True 💕❤️ 💞 God Bless You 😊🥰 मला माहित नाही की तुझ्यासोबत माझं काय नातं आहे पण तु जेव्हापासून माझ्या जीवनात आलास तेव्हापासून असा एकही क्षण जात नाही कि तुझी आजपर्यंत आठवण येत नाही. तुझ्यासोबत माझं आता नातं निर्माण झालं आहे ते मी तरी मरेपर्यंत तोडणार नाही. ❤️💕💝💖😊. खूप आठवण येते तुझी यार 😔🥹🥹 काळजी घे . Love You So Much My Heart Beat ❤️💕💝";
+        
+        let index = 0;
+        function startTyping() {
+            if (index < fullText.length) {
+                document.getElementById("typingMsg").innerHTML += fullText.charAt(index);
+                index++;
+                setTimeout(startTyping, 40);
+            }
+        }
+
+        function swapCard() {
+            let stack = document.getElementById('stack');
+            let cards = Array.from(stack.querySelectorAll('.polaroid-card'));
+            let topCard = cards[0];
+            topCard.style.transform = "translateX(350px) rotate(30deg)";
+            topCard.style.opacity = "0";
+            setTimeout(() => {
+                stack.appendChild(topCard);
+                topCard.style.transform = "rotate(" + (Math.random() * 10 - 5) + "deg)";
+                topCard.style.opacity = "1";
+                let newOrder = stack.querySelectorAll('.polaroid-card');
+                newOrder[0].style.zIndex = "3";
+                newOrder[1].style.zIndex = "2";
+                newOrder[2].style.zIndex = "1";
+            }, 400);
+        }
+
+        function triggerBlast() {
+            document.getElementById('gb').style.display = "none";
+            document.getElementById('tapHint').style.display = "none";
+            document.getElementById('giftContent').style.display = "block";
+            for(let i=0; i<20; i++) {
+                setTimeout(() => {
+                    let b = document.createElement('div');
+                    b.className = 'balloon';
+                    b.innerHTML = ['🎈', '💖', '✨', '🌸'][Math.floor(Math.random()*4)];
+                    b.style.left = Math.random() * 100 + 'vw';
+                    document.body.appendChild(b);
+                    setTimeout(() => b.remove(), 4000);
+                }, i * 100);
+            }
+        }
+
+        function moveNo() {
+            const card = document.getElementById('mainCard');
+            card.classList.add('shake');
+            setTimeout(() => card.classList.remove('shake'), 300);
+            let btn = document.getElementById('noBtn');
+            btn.style.position = 'absolute';
+            btn.style.left = Math.random() * 200 - 100 + 'px';
+            btn.style.top = Math.random() * 200 - 100 + 'px';
+        }
+
+        function toggleMusic() {
+            let audio = document.getElementById('bgMusic');
+            return audio.paused ? audio.play() : audio.pause();
+        }
+    </script>
+</body>
+</html>
